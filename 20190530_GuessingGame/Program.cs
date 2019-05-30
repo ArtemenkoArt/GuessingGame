@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GuessingGameLibrary;
 
 namespace _20190530_GuessingGame
 {
@@ -10,12 +11,40 @@ namespace _20190530_GuessingGame
     {
         static void Main(string[] args)
         {
-            //regular player
-            //player notepad
-            //Uber player
-            //Cheater
-            //Uber-Cheater
+           
+            Random random = new Random(new System.DateTime().Millisecond);
+            int BasketWeight = random.Next(40, 140);
+            MainMethods main = new MainMethods();
 
+
+            Player winner = null;
+
+            //intrface - qty player
+            //intrface - name & type in keyvord
+            //create player with Library<var, delegate>
+
+            //UI - 10%
+            //Arhitect - 20%
+            //OOP - 40
+            //Logic - 30%
+
+            for (int i = 1; i < 100; i++)
+            {
+                foreach (Player currentPlayer in main.players)
+                {
+                    //
+                    int currentMove = currentPlayer.GetNewMove();
+                    if (currentMove == BasketWeight)
+                    {
+                        //WINNER!!!!
+                    }
+                }
+            }
+
+            if (winner == null)
+            {
+                winner = main.GetAlmostWinner();
+            }
         }
     }
 }
