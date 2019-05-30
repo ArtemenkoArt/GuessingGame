@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainMethods.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Matrix\PlayerMove.cs" />
     <Compile Include="Players\Notepad.cs" />

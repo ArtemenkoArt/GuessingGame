@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace GuessingGameLibrary
 {
-    class UberCheater
+    class UberCheater : Player
     {
+        public UberCheater(Matrix matrix) : base(matrix) { }
+
+        public override bool CheckMove(int move)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetNewMove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

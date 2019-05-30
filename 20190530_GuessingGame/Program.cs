@@ -14,7 +14,7 @@ namespace _20190530_GuessingGame
            
             Random random = new Random(new System.DateTime().Millisecond);
             int BasketWeight = random.Next(40, 140);
-            MainMethods main = new MainMethods();
+            Main main = new Main();
 
 
             Player winner = null;
