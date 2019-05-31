@@ -8,9 +8,11 @@ namespace GuessingGameLibrary
 {
     public class Main
     {
-        public List<Player> players = new List<Player>();
         Random random = new Random(new System.DateTime().Millisecond);
-        public static Matrix matrix = new Matrix();
+        public int Finish { get; }
+        public List<Player> players = new List<Player>();
+        public Matrix matrix = new Matrix();
+        public Player winner { get; private set; } = null;
 
         public delegate Player GetPlayer(Matrix matrix, string name);
 
@@ -26,29 +28,12 @@ namespace GuessingGameLibrary
 
         public Main()
         {
-            //dict.Add(1, new GetPlayer(delegate { new Notepad(matrix); }));
-            //dict.Add(2, new GetPlayer(delegate { new Regular(matrix); }));
-            //dict.Add(3, new GetPlayer(delegate { new UberPlayer(matrix); }));
-            //dict.Add(4, new GetPlayer(delegate { new Cheater(matrix); }));
-            //dict.Add(5, new GetPlayer(delegate { new UberCheater(matrix); }));
-
-            Player player = dict[1].Invoke( matrix, "Player1");
-
-            //Create random qty players
-            for (int i = 0; i < random.Next(2, 8); i++)
-            {
-                //players.Add(GetRandomPlayer());
-                //players.Add(dict[1].Invoke());
-            }
+            int Finish = random.Next(40, 140);
         }
 
-        public Player GetRandomPlayer()
+        public Player GetRandomTypePlayer(string name)
         {
-            
-            int rnd = random.Next(1, 5);
-            //****
-            //return new Notepad(matrix);
-            return null;
+            return dict[random.Next(1, 5)].Invoke(matrix, name);
         }
 
         public Player GetAlmostWinner()
@@ -56,6 +41,12 @@ namespace GuessingGameLibrary
             return null;
         }
 
+        public int PlayerMove(Player player)
+        {
+            int move = player.GetNewMove();
+            matrix.PlayerMoove(player, move);
+            return move;
+        }
 
     }
 }

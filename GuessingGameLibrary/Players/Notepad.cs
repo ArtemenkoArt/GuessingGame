@@ -12,12 +12,23 @@ namespace GuessingGameLibrary
 
         public override bool CheckMove(int move)
         {
-            throw new NotImplementedException();
+            return Matrix.CheckValue(move, this);
         }
 
         public override int GetNewMove()
         {
-            throw new NotImplementedException();
+            bool GetNewMove = false;
+            int currentMove = 0;
+            //Do not exit the loop until we get the value without repeating
+            while (!GetNewMove)
+            {
+                currentMove = random.Next(40, 140);
+                if (CheckMove(currentMove))
+                {
+                    GetNewMove = true;
+                }
+            }
+            return currentMove;
         }
     }
 }

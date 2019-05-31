@@ -22,10 +22,27 @@ namespace GuessingGameLibrary
                 if (playerMoves.Find((x) => x.Move == value) == null)
                     return true;
             }
-            if (playerMoves.Find((x) => (x.Move == value) && (x.Player == player)) == null)
-                return true;
+            else
+            {
+                if (playerMoves.Find((x) => (x.Move == value) && (x.Player == player)) == null)
+                    return true;
+            }
             return false;
         }
+
+        //public int GetMaxPlayerMove(Player player, int startValue = 0)
+        //{
+        //    if (startValue == 0)
+        //    {
+        //        var move = playerMoves.FindAll((x) => x.Player == player).Max((x) => x.Move);
+        //        return move;
+        //    }
+        //    else
+        //    {
+        //        var move = playerMoves.FindAll((x) => x.Player == player && x.Move >= startValue).Max((x) => x.Move);
+        //        return move;
+        //    }
+        //}
 
         public void PlayerMoove(Player player, int move)
         {

@@ -12,12 +12,12 @@ namespace GuessingGameLibrary
 
         public override bool CheckMove(int move)
         {
-            throw new NotImplementedException();
+            return true; //Not used
         }
 
         public override int GetNewMove()
         {
-            throw new NotImplementedException();
+            return random.Next(40, 140);
         }
     }
 }
