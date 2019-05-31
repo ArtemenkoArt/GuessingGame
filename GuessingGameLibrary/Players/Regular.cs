@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuessingGameLibrary.Players
+namespace GuessingGameLibrary
 {
-    class Regular : Player
+    public class Regular : Player
     {
-        public Regular(Matrix matrix) : base(matrix) { }
+        public Regular(Matrix matrix, string name) : base(matrix, name) { }
 
         public override bool CheckMove(int move)
         {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GuessingGameLibrary
 {
-    public class UberCheater : Player
+    public class Cheater : Player
     {
-        public UberCheater(Matrix matrix, string name) : base(matrix, name) { }
+        public Cheater(Matrix matrix, string name) : base(matrix, name) { }
 
         public override bool CheckMove(int move)
         {

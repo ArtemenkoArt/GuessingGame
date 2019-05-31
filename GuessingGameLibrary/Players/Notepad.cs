@@ -8,8 +8,7 @@ namespace GuessingGameLibrary
 {
     public class Notepad : Player
     {
-
-        public Notepad(Matrix matrix) : base(matrix) { }
+        public Notepad(Matrix matrix, string name) : base(matrix, name) { }
 
         public override bool CheckMove(int move)
         {

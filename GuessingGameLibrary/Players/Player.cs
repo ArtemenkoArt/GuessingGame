@@ -8,14 +8,16 @@ namespace GuessingGameLibrary
 {
     public abstract class Player
     {
+        public string Name { get; }
         public Random random = new Random(new System.DateTime().Millisecond);
         public Matrix Matrix { get; private set; } = null;
         public abstract bool CheckMove(int move);
         public abstract int GetNewMove();
 
-        public Player(Matrix matrix)
+        public Player(Matrix matrix, string name)
         {
             Matrix = matrix;
+            Name = name;
         }
     }
 }
