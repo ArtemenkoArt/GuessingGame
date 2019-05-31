@@ -12,15 +12,15 @@ namespace GuessingGameLibrary
         Random random = new Random(new System.DateTime().Millisecond);
         public static Matrix matrix = new Matrix();
 
-        public delegate Player GetPlayer(Matrix matrix);
+        public delegate Player GetPlayer(Matrix matrix, string name);
 
         private static Dictionary<int, GetPlayer> dict = new Dictionary<int, GetPlayer>
         {
-            { 1, new GetPlayer(delegate (Matrix matrix) { return new Notepad(matrix); }) },
-            { 2, new GetPlayer(delegate (Matrix matrix) { return new Regular(matrix); }) },
-            { 3, new GetPlayer(delegate (Matrix matrix) { return new UberPlayer(matrix); })},
-            { 4, new GetPlayer(delegate (Matrix matrix) { return new Cheater(matrix); })},
-            { 5, new GetPlayer(delegate (Matrix matrix) { return new UberCheater(matrix); })}
+            { 1, new GetPlayer(delegate (Matrix matrix, string name) { return new Notepad(matrix, name); }) },
+            { 2, new GetPlayer(delegate (Matrix matrix, string name) { return new Regular(matrix, name); }) },
+            { 3, new GetPlayer(delegate (Matrix matrix, string name) { return new UberPlayer(matrix, name); })},
+            { 4, new GetPlayer(delegate (Matrix matrix, string name) { return new Cheater(matrix, name); })},
+            { 5, new GetPlayer(delegate (Matrix matrix, string name) { return new UberCheater(matrix, name); })}
         };
 
 
@@ -32,7 +32,7 @@ namespace GuessingGameLibrary
             //dict.Add(4, new GetPlayer(delegate { new Cheater(matrix); }));
             //dict.Add(5, new GetPlayer(delegate { new UberCheater(matrix); }));
 
-            Player player = dict[1].Invoke( matrix );
+            Player player = dict[1].Invoke( matrix, "Player1");
 
             //Create random qty players
             for (int i = 0; i < random.Next(2, 8); i++)
@@ -47,7 +47,8 @@ namespace GuessingGameLibrary
             
             int rnd = random.Next(1, 5);
             //****
-            return new Notepad(matrix);
+            //return new Notepad(matrix);
+            return null;
         }
 
         public Player GetAlmostWinner()
