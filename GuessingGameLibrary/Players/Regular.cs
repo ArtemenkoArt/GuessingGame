@@ -19,7 +19,7 @@ namespace GuessingGameLibrary
 
         public override int GetNewMove()
         {
-            return random.Next(40, 140);
+            return rnd.GetRandom(40, 140);
         }
     }
 }

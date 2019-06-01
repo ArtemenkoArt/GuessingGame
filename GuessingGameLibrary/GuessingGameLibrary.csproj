@@ -52,6 +52,7 @@
     <Compile Include="Players\UberCheater.cs" />
     <Compile Include="Players\UberPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rnd.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

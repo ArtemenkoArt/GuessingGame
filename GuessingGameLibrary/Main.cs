@@ -8,14 +8,12 @@ namespace GuessingGameLibrary
 {
     public class Main
     {
-        Random random = new Random(new System.DateTime().Millisecond);
         public int Finish { get; }
         public List<Player> players = new List<Player>();
-        public Matrix matrix = new Matrix();
-        public Player winner { get; private set; } = null;
+        public Matrix Matrix { get; private set; }
+        public Player Winner { get; private set; }
 
         public delegate Player GetPlayer(Matrix matrix, string name);
-
         private static Dictionary<int, GetPlayer> dict = new Dictionary<int, GetPlayer>
         {
             { 1, new GetPlayer(delegate (Matrix matrix, string name) { return new Notepad(matrix, name); }) },
@@ -25,31 +23,35 @@ namespace GuessingGameLibrary
             { 5, new GetPlayer(delegate (Matrix matrix, string name) { return new UberCheater(matrix, name); })}
         };
 
-
         public Main()
         {
-            Finish = random.Next(40, 140);
+            Finish = rnd.GetRandom(40, 140);
+            Matrix = new Matrix();
         }
 
         public Player GetRandomTypePlayer(string name)
         {
-            return dict[random.Next(1, 6)].Invoke(matrix, name);
+            return dict[rnd.GetRandom(1, 6)].Invoke(Matrix, name);
+        }
+
+        public void AddNewPlayer(string playerName)
+        {
+           players.Add(GetRandomTypePlayer(playerName));
         }
 
         public Player GetAlmostWinner()
         {
+            var pp = Matrix.GetAlmostWinner(Finish);
             return null;
         }
 
         public int PlayerMove(Player player)
         {
             int move = player.GetNewMove();
-            matrix.PlayerMoove(player, move);
+            Matrix.PlayerMoove(player, move);
 
             if (move == Finish)
-            {
-                winner = player;
-            }
+                Winner = player;
 
             return move;
         }

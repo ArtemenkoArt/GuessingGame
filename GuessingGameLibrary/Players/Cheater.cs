@@ -23,7 +23,7 @@ namespace GuessingGameLibrary
             //Do not exit the loop until we get the value without repeating
             while (!GetNewMove)
             {
-                currentMove = random.Next(40, 140);
+                currentMove = rnd.GetRandom(40, 140);
                 if (CheckMove(currentMove))
                 {
                     GetNewMove = true;

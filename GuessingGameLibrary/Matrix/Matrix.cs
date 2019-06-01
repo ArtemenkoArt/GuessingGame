@@ -12,7 +12,7 @@ namespace GuessingGameLibrary
 
         public Matrix()
         {
-            //
+            
         }
 
         public bool CheckValue(int value, Player player = null)
@@ -43,6 +43,27 @@ namespace GuessingGameLibrary
         //        return move;
         //    }
         //}
+
+        public Player GetAlmostWinner(int finish)
+        {
+            var result =
+                        (from diffVal in
+                        (
+                            from maxWin in playerMoves
+                            orderby maxWin.Move
+                            select new
+                            {
+                                Player = maxWin.Player,
+                                Move = maxWin.Move,
+                                diff = (maxWin.Move - finish) * 1
+                            }
+                         )
+                         orderby diffVal.diff
+                         select diffVal.Player).Take(1);
+
+            //return (Player)result;
+            return null;
+        }
 
         public void PlayerMoove(Player player, int move)
         {

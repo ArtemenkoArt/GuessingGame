@@ -64,50 +64,46 @@ namespace _20190530_GuessingGame
                 Console.ReadKey();
                 Environment.Exit(0);
             }
+
             for (int i = 1; i <= qtyPlayers; i++)
             {
                 Console.Write($"Enter name Player{i}: ");
                 string playerName = Console.ReadLine();
-                main.players.Add(main.GetRandomTypePlayer(playerName));
+                main.AddNewPlayer(playerName);
             }
 
             Console.Clear();
             PrintHead(main.players);
 
-            //UI - 10%
-            //Arhitect - 20%
-            //OOP - 40
-            //Logic - 30%
-
             int totalMove = 100;
-            while (totalMove > 0 && main.winner == null)
+            while (totalMove > 0 && main.Winner == null)
             {
                 Dictionary<Player, int> playersMove = new Dictionary<Player, int>();
-                for (int i = 0; (i < main.players.Count) && (main.winner == null || totalMove > 0); i++)
+
+                foreach (Player player in main.players)
                 {
+                    if (main.Winner != null || totalMove <= 0)
+                    {
+                        break;
+                    }
+
                     totalMove--;
-                    Player currentPlayer = main.players[i];
-                    int currentMove = main.PlayerMove(currentPlayer);
-
-                    playersMove.Add(currentPlayer, currentMove);
-
-                    //if (main.winner != null)
-                    //    break;
+                    int move = main.PlayerMove(player);
+                    playersMove.Add(player, move);
                 }
                 PrintLine(playersMove);
-                //if (main.winner != null)
-                //    break;
             }
 
             Console.WriteLine($"Finish value: {main.Finish}");
+            var aw = main.GetAlmostWinner();
 
-            if (main.winner == null)
+            if (main.Winner == null)
             {
                 Console.WriteLine($"There is no winner. The closest of all was: {main.GetAlmostWinner()}");
             }
             else
             {
-                Console.WriteLine($"WINNER - player: {main.winner.Name} ({main.winner.PlayerType})");
+                Console.WriteLine($"WINNER - player: {main.Winner.Name} ({main.Winner.PlayerType})");
             }
 
             Console.ReadKey();
