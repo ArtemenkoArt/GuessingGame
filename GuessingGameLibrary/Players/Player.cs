@@ -11,6 +11,7 @@ namespace GuessingGameLibrary
         public string Name { get; }
         public Random random = new Random(new System.DateTime().Millisecond);
         public Matrix Matrix { get; private set; } = null;
+        public abstract string PlayerType { get;}
         public abstract bool CheckMove(int move);
         public abstract int GetNewMove();
 

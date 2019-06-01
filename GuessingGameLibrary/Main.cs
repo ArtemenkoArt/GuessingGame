@@ -28,12 +28,12 @@ namespace GuessingGameLibrary
 
         public Main()
         {
-            int Finish = random.Next(40, 140);
+            Finish = random.Next(40, 140);
         }
 
         public Player GetRandomTypePlayer(string name)
         {
-            return dict[random.Next(1, 5)].Invoke(matrix, name);
+            return dict[random.Next(1, 6)].Invoke(matrix, name);
         }
 
         public Player GetAlmostWinner()
@@ -45,6 +45,12 @@ namespace GuessingGameLibrary
         {
             int move = player.GetNewMove();
             matrix.PlayerMoove(player, move);
+
+            if (move == Finish)
+            {
+                winner = player;
+            }
+
             return move;
         }
 

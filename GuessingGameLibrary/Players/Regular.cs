@@ -8,6 +8,8 @@ namespace GuessingGameLibrary
 {
     public class Regular : Player
     {
+        public override string PlayerType => "Regular";
+
         public Regular(Matrix matrix, string name) : base(matrix, name) { }
 
         public override bool CheckMove(int move)

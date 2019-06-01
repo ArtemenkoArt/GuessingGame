@@ -29,18 +29,50 @@ namespace _20190530_GuessingGame
             return flagExit;
         }
 
+        static public void PrintHead(List<Player> players)
+        {
+            string line = "|";
+            foreach (Player player in players)
+            {
+                string strPlayerType = player.PlayerType;
+                line += $" {strPlayerType.PadRight(15, ' ')}|";
+            }
+            Console.WriteLine(line);
+        }
+
+        static public void PrintLine(Dictionary<Player, int> dictMove)
+        {
+            string line = "|";
+            foreach (KeyValuePair<Player, int> lineDict in dictMove)
+            {
+                string strPlayer = lineDict.Key.Name;
+                string strValue = Convert.ToString(lineDict.Value);
+                line += $" {strPlayer.PadRight(10,' ')}|{strValue.PadLeft(4, ' ')}|";
+            }
+            Console.WriteLine(line);
+        }
+
         static void Main(string[] args)
         {
            
             Main main = new Main();
 
             int qtyPlayers = GetUserChoise("Enter the number of players (2 - 8 players): ");
-            for (int i = 1; i < qtyPlayers; i++)
+            if (qtyPlayers < 2 || qtyPlayers > 8)
             {
-                Console.Write($"Enter name Player{i}:");
+                Console.WriteLine("The number of players must be 2 - 8...");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            for (int i = 1; i <= qtyPlayers; i++)
+            {
+                Console.Write($"Enter name Player{i}: ");
                 string playerName = Console.ReadLine();
                 main.players.Add(main.GetRandomTypePlayer(playerName));
             }
+
+            Console.Clear();
+            PrintHead(main.players);
 
             //UI - 10%
             //Arhitect - 20%
@@ -48,28 +80,34 @@ namespace _20190530_GuessingGame
             //Logic - 30%
 
             int totalMove = 100;
-            while (totalMove > 0 || main.winner == null)
+            while (totalMove > 0 && main.winner == null)
             {
-                for (int i = 0; i < main.players.Count || main.winner != null || totalMove > 0; i++)
+                Dictionary<Player, int> playersMove = new Dictionary<Player, int>();
+                for (int i = 0; (i < main.players.Count) && (main.winner == null || totalMove > 0); i++)
                 {
-                    totalMove++;
+                    totalMove--;
                     Player currentPlayer = main.players[i];
                     int currentMove = main.PlayerMove(currentPlayer);
 
-                    if (i == 0)
-                    {
-                        Console.WriteLine($"Player #{i-1} : {currentPlayer}, Move: {currentMove}");
-                    }
-                    else
-                    {
-                        Console.Write($"Player #{i-1} : {currentPlayer}, Move: {currentMove}");
-                    }
+                    playersMove.Add(currentPlayer, currentMove);
+
+                    //if (main.winner != null)
+                    //    break;
                 }
+                PrintLine(playersMove);
+                //if (main.winner != null)
+                //    break;
             }
+
+            Console.WriteLine($"Finish value: {main.Finish}");
 
             if (main.winner == null)
             {
                 Console.WriteLine($"There is no winner. The closest of all was: {main.GetAlmostWinner()}");
+            }
+            else
+            {
+                Console.WriteLine($"WINNER - player: {main.winner.Name} ({main.winner.PlayerType})");
             }
 
             Console.ReadKey();
