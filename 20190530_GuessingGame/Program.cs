@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using GuessingGameLibrary;
 
-namespace _20190530_GuessingGame
+namespace GuessingGame
 {
     class Program
     {
-
         static public int GetUserChoise(string msg)
         {
             int flagExit = 0;
@@ -17,46 +16,22 @@ namespace _20190530_GuessingGame
             {
                 Console.Write($"{msg}");
                 string inputValue = Console.ReadLine();
+                if (inputValue == "x" || inputValue == "X")
+                    Environment.Exit(0);
 
                 if (int.TryParse(inputValue, out flagExit))
                     if (flagExit == 0)
-                        Console.WriteLine($"{Environment.NewLine}Value can not be zero, try again:");
+                        Console.WriteLine($"{Environment.NewLine}Value can not be zero, try again (enter X to exit):");
                     else
                         break;
                 else
-                    Console.WriteLine($"{Environment.NewLine}Input value not recognized, try again:");
+                    Console.WriteLine($"{Environment.NewLine}Input value not recognized, try again (enter X to exit):");
             }
             return flagExit;
         }
 
-        static public void PrintHead(List<Player> players)
+        static public string[] GetPlayersName()
         {
-            string line = "|";
-            foreach (Player player in players)
-            {
-                string strPlayerType = player.PlayerType;
-                line += $" {strPlayerType.PadRight(15, ' ')}|";
-            }
-            Console.WriteLine(line);
-        }
-
-        static public void PrintLine(Dictionary<Player, int> dictMove)
-        {
-            string line = "|";
-            foreach (KeyValuePair<Player, int> lineDict in dictMove)
-            {
-                string strPlayer = lineDict.Key.Name;
-                string strValue = Convert.ToString(lineDict.Value);
-                line += $" {strPlayer.PadRight(10,' ')}|{strValue.PadLeft(4, ' ')}|";
-            }
-            Console.WriteLine(line);
-        }
-
-        static void Main(string[] args)
-        {
-           
-            Main main = new Main();
-
             int qtyPlayers = GetUserChoise("Enter the number of players (2 - 8 players): ");
             if (qtyPlayers < 2 || qtyPlayers > 8)
             {
@@ -65,46 +40,30 @@ namespace _20190530_GuessingGame
                 Environment.Exit(0);
             }
 
-            for (int i = 1; i <= qtyPlayers; i++)
+            string[] names = new string[qtyPlayers];
+            for (int i = 0; i < qtyPlayers; i++)
             {
-                Console.Write($"Enter name Player{i}: ");
-                string playerName = Console.ReadLine();
-                main.AddNewPlayer(playerName);
+                Console.Write($"Enter name Player{i + 1}: ");
+                string name = Console.ReadLine();
+                names[i] = name.Length > 8 ? name.Substring(0,8) : name;
             }
 
             Console.Clear();
-            PrintHead(main.players);
+            return names;
+        }
 
-            int totalMove = 100;
-            while (totalMove > 0 && main.Winner == null)
-            {
-                Dictionary<Player, int> playersMove = new Dictionary<Player, int>();
+        static public void PrintMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
 
-                foreach (Player player in main.players)
-                {
-                    if (main.Winner != null || totalMove <= 0)
-                    {
-                        break;
-                    }
+        static void Main(string[] args)
+        {
+            GuessingGameLibrary.ClientOutput output = PrintMessage;
+            Game game = new Game();
 
-                    totalMove--;
-                    int move = main.PlayerMove(player);
-                    playersMove.Add(player, move);
-                }
-                PrintLine(playersMove);
-            }
-
-            Console.WriteLine($"Finish value: {main.Finish}");
-            var aw = main.GetAlmostWinner();
-
-            if (main.Winner == null)
-            {
-                Console.WriteLine($"There is no winner. The closest of all was: {main.GetAlmostWinner()}");
-            }
-            else
-            {
-                Console.WriteLine($"WINNER - player: {main.Winner.Name} ({main.Winner.PlayerType})");
-            }
+            game.AddPlayers(GetPlayersName());
+            game.StartGame(output);
 
             Console.ReadKey();
         }

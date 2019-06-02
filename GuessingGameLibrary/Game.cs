@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace GuessingGameLibrary
 {
-    public class Main
+    public class Game
     {
+        
         public int Finish { get; }
         public List<Player> players = new List<Player>();
         public Matrix Matrix { get; private set; }
@@ -23,9 +24,9 @@ namespace GuessingGameLibrary
             { 5, new GetPlayer(delegate (Matrix matrix, string name) { return new UberCheater(matrix, name); })}
         };
 
-        public Main()
+        public Game()
         {
-            Finish = rnd.GetRandom(40, 140);
+            Finish = rnd.GetRandom(40, 240);
             Matrix = new Matrix();
         }
 
@@ -34,14 +35,17 @@ namespace GuessingGameLibrary
             return dict[rnd.GetRandom(1, 6)].Invoke(Matrix, name);
         }
 
-        public void AddNewPlayer(string playerName)
+        public void AddPlayers(string[] names)
         {
-           players.Add(GetRandomTypePlayer(playerName));
+            foreach (var name in names)
+            {
+                players.Add(GetRandomTypePlayer(name));
+            }
         }
 
         public Player GetAlmostWinner()
         {
-            var pp = Matrix.GetAlmostWinner(Finish);
+            //***var pp = Matrix.GetAlmostWinner(Finish);
             return null;
         }
 
@@ -56,5 +60,38 @@ namespace GuessingGameLibrary
             return move;
         }
 
+        public void StartGame(ClientOutput output)
+        {
+            Output.ClientPrintLine($"Finish value: {Finish}", output);
+            Output.ClientPrintTabHead(players, output);
+
+            int totalMove = 100;
+            while (totalMove > 0 && Winner == null)
+            {
+                Dictionary<Player, int> playersMove = new Dictionary<Player, int>();
+
+                foreach (Player player in players)
+                {
+                    if (Winner != null || totalMove <= 0)
+                    {
+                        break;
+                    }
+
+                    totalMove--;
+                    int move = PlayerMove(player);
+                    playersMove.Add(player, move);
+                }
+                Output.ClientPrintTabLine(playersMove, output);
+            }
+
+            if (Winner == null)
+            {
+                Output.ClientPrintLine($"There is no winner. The almost winner was: {GetAlmostWinner()}", output);
+            }
+            else
+            {
+                Output.ClientPrintLine($"WINNER - player: {Winner.Name} ({Winner.PlayerType})", output);
+            }
+        }
     }
 }

@@ -42,9 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Matrix\PlayerMove.cs" />
+    <Compile Include="Output.cs" />
     <Compile Include="Players\Cheater.cs" />
     <Compile Include="Players\Notepad.cs" />
     <Compile Include="Players\Player.cs" />

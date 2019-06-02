@@ -59,10 +59,10 @@ namespace GuessingGameLibrary
                             }
                          )
                          orderby diffVal.diff
-                         select diffVal.Player).Take(1);
+                         select new { diffVal.Player } ).Take(1);
 
-            //return (Player)result;
-            return null;
+            return (Player)result;
+            //return null;
         }
 
         public void PlayerMoove(Player player, int move)
