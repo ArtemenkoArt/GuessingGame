@@ -45,7 +45,6 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameMove\GameMove.cs" />
     <Compile Include="GameMove\PlayerMove.cs" />
-    <Compile Include="Output.cs" />
     <Compile Include="Players\Cheater.cs" />
     <Compile Include="Players\Notepad.cs" />
     <Compile Include="Players\Player.cs" />

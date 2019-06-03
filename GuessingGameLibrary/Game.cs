@@ -8,7 +8,8 @@ namespace GuessingGameLibrary
 {
     public class Game
     {
-        
+        public delegate void Output(string message);
+        public event Output ClientOutput;
         public int Finish { get; }
         public List<Player> players = new List<Player>();
         public GameMove Moves { get; private set; }
@@ -26,7 +27,7 @@ namespace GuessingGameLibrary
 
         public Game()
         {
-            Finish = rnd.GetRandom(40, 240);
+            Finish = rnd.GetRandom(40, 140);
             Moves = new GameMove();
         }
 
@@ -54,11 +55,34 @@ namespace GuessingGameLibrary
             return move;
         }
 
-        public void StartGame(ClientOutput output)
+        public static string AssembleHead(List<Player> players)
         {
-            Output.ClientPrintLine($"Finish value: {Finish}", output);
-            Output.ClientPrintTabHead(players, output);
+            string line = "|";
+            foreach (Player player in players)
+            {
+                string strPlayerType = player.PlayerType;
+                line += $" {strPlayerType.PadRight(15, ' ')}|";
+            }
+            return line;
+        }
 
+        public static string AssembleLine(Dictionary<Player, int> dictMove)
+        {
+            string line = "|";
+            foreach (KeyValuePair<Player, int> lineDict in dictMove)
+            {
+                string strPlayer = lineDict.Key.Name;
+                string strValue = Convert.ToString(lineDict.Value);
+                line += $" {strPlayer.PadRight(10, ' ')}|{strValue.PadLeft(4, ' ')}|";
+            }
+            return line;
+        }
+
+        public void StartGame()
+        {
+            ClientOutput?.Invoke($"Finish value: { Finish}");
+            ClientOutput?.Invoke(AssembleHead(players));
+            
             int totalMove = 100;
             while (totalMove > 0 && Winner == null)
             {
@@ -75,16 +99,16 @@ namespace GuessingGameLibrary
                     int move = PlayerMove(player);
                     playersMove.Add(player, move);
                 }
-                Output.ClientPrintTabLine(playersMove, output);
+                ClientOutput?.Invoke(AssembleLine(playersMove));
             }
 
             if (Winner == null)
             {
-                Output.ClientPrintLine($"There is no winner. The almost winner was: {Moves.GetAlmostWinner(Finish)}", output);
+                ClientOutput?.Invoke($"There is no winner. The almost winner was: {Moves.GetAlmostWinner(Finish)}");
             }
             else
             {
-                Output.ClientPrintLine($"WINNER - player: {Winner.Name} ({Winner.PlayerType})", output);
+                ClientOutput?.Invoke($"WINNER - player: {Winner.Name} ({Winner.PlayerType})");
             }
         }
     }

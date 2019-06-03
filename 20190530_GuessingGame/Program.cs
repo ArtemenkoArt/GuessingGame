@@ -59,11 +59,11 @@ namespace GuessingGame
 
         static void Main(string[] args)
         {
-            GuessingGameLibrary.ClientOutput output = PrintMessage;
+            //GuessingGameLibrary.ClientOutput output = PrintMessage;
             Game game = new Game();
-
+            game.ClientOutput += PrintMessage;
             game.AddPlayers(GetPlayersName());
-            game.StartGame(output);
+            game.StartGame();
 
             Console.ReadKey();
         }
