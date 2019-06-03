@@ -9,12 +9,12 @@ namespace GuessingGameLibrary
     public abstract class Player
     {
         public string Name { get; }
-        public Matrix Matrix { get; private set; } = null;
+        public GameMove Matrix { get; private set; } = null;
         public abstract string PlayerType { get;}
         public abstract bool CheckMove(int move);
         public abstract int GetNewMove();
 
-        public Player(Matrix matrix, string name)
+        public Player(GameMove matrix, string name)
         {
             Matrix = matrix;
             Name = name;

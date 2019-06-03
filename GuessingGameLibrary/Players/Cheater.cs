@@ -9,7 +9,7 @@ namespace GuessingGameLibrary
     public class Cheater : Player
     {
         public override string PlayerType => "Cheater";
-        public Cheater(Matrix matrix, string name) : base(matrix, name) { }
+        public Cheater(GameMove matrix, string name) : base(matrix, name) { }
 
         public override bool CheckMove(int move)
         {

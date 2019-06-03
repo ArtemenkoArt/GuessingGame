@@ -10,7 +10,7 @@ namespace GuessingGameLibrary
     {
         public override string PlayerType => "UberCheater";
 
-        public UberCheater(Matrix matrix, string name) : base(matrix, name) { }
+        public UberCheater(GameMove matrix, string name) : base(matrix, name) { }
 
         public override bool CheckMove(int move)
         {
